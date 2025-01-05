@@ -4,7 +4,7 @@ import { NavLink } from "react-router";
 
 export default function SideBar() {
   return (
-    <div className="min-h-screen h-full w-[271px] flex flex-col justify-between bg-[#003049]">
+    <div className="h-lvh w-[271px] flex flex-col justify-between bg-[#003049]">
       <div>
         {/*profile picture and username*/}
         <div className="p-1 mb-2">
