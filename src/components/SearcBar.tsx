@@ -21,7 +21,7 @@ export default function SearchBar(props: TSearchBar) {
           setQuery("");
         }}
       >
-        <div className="bg-[#F8F7F7] flex flex-row items-center gap-x-2 p-2 border-[2px] border-black border-opacity-10 rounded-sm">
+        <div className="bg-[#F8F7F7] flex flex-row items-center gap-x-2 p-2 border-[2px] border-black border-opacity-5 rounded-[3px]">
           <button type="submit">
             <Search className="opacity-50" color="black" />
           </button>
