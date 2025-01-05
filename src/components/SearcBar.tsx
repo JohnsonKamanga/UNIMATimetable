@@ -1,9 +1,9 @@
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 type TSearchBar = {
   placeholder: string;
-  handleSearch: (args: any) => any;
+  handleSearch: (event: FormEvent<HTMLFormElement>, query: string) => any;
 };
 
 export default function SearchBar(props: TSearchBar) {
@@ -15,9 +15,16 @@ export default function SearchBar(props: TSearchBar) {
 
   return (
     <div className="bg-white w-full p-3 flex items-center">
-      <div className="bg-[#F8F7F7] flex flex-row items-center gap-x-2 p-2 border-[2px] border-black border-opacity-10 rounded-sm">
-        <Search className="opacity-50" color="black" />
-        <form onSubmit={handleSearch}>
+      <form
+        onSubmit={(event) => {
+          handleSearch(event, query);
+          setQuery("");
+        }}
+      >
+        <div className="bg-[#F8F7F7] flex flex-row items-center gap-x-2 p-2 border-[2px] border-black border-opacity-10 rounded-sm">
+          <button type="submit">
+            <Search className="opacity-50" color="black" />
+          </button>
           <input
             type="search"
             placeholder={placeholder}
@@ -25,8 +32,8 @@ export default function SearchBar(props: TSearchBar) {
             className="outline-none bg-transparent w-[470px]"
             onChange={handleInputChange}
           />
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 }
