@@ -1,0 +1,32 @@
+import { Search } from "lucide-react";
+import { useState } from "react";
+
+type TSearchBar = {
+  placeholder: string;
+  handleSearch: (args: any) => any;
+};
+
+export default function SearchBar(props: TSearchBar) {
+  const { placeholder, handleSearch } = props;
+  const [query, setQuery] = useState("");
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(event.target.value);
+  };
+
+  return (
+    <div className="bg-white w-full p-3 flex items-center">
+      <div className="bg-[#F8F7F7] flex flex-row items-center gap-x-2 p-2 border-[2px] border-black border-opacity-10 rounded-sm">
+        <Search className="opacity-50" color="black" />
+        <form onSubmit={handleSearch}>
+          <input
+            type="search"
+            placeholder={placeholder}
+            value={query}
+            className="outline-none bg-transparent w-[470px]"
+            onChange={handleInputChange}
+          />
+        </form>
+      </div>
+    </div>
+  );
+}
