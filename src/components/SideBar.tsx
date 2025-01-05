@@ -1,5 +1,6 @@
 import { Book, Calendar1Icon, LogOut, Settings } from "lucide-react";
 import Image from "../assets/image.jpg";
+import { NavLink } from "react-router";
 
 export default function SideBar() {
   return (
@@ -21,22 +22,43 @@ export default function SideBar() {
         {/*Sidebar options */}
         <div className="gap-y-3 p-2">
           <div>
-            <div className="flex flex-row items-center gap-x-1 bg-white bg-opacity-10 rounded-xl p-3">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive
+                  ? "flex flex-row items-center gap-x-1 bg-white bg-opacity-10 rounded-xl p-3 hover:bg-white hover:bg-opacity-20 transition-all"
+                  : "flex flex-row items-center gap-x-1 rounded-xl p-3 hover:bg-white hover:bg-opacity-20 transition-all"
+              }
+            >
               <Calendar1Icon color="white" />
               <p className="text-white font-semibold text-xl">Timetables</p>
-            </div>
+            </NavLink>
           </div>
           <div>
-            <div className="flex flex-row items-center gap-x-1 rounded-xl p-3">
+            <NavLink
+              to="/courses"
+              className={({ isActive }) =>
+                isActive
+                  ? "flex flex-row items-center gap-x-1 bg-white bg-opacity-10 rounded-xl p-3 hover:bg-white hover:bg-opacity-20 transition-all"
+                  : "flex flex-row items-center gap-x-1 rounded-xl p-3 hover:bg-white hover:bg-opacity-20 transition-all"
+              }
+            >
               <Book color="white" />
               <p className="text-white font-semibold text-xl">Courses</p>
-            </div>
+            </NavLink>
           </div>
           <div>
-            <div className="flex flex-row items-center gap-x-1 rounded-xl p-3">
+            <NavLink
+              to="/settings"
+              className={({ isActive }) =>
+                isActive
+                  ? "flex flex-row items-center gap-x-1 bg-white bg-opacity-10 rounded-xl p-3 hover:bg-white hover:bg-opacity-20 transition-all"
+                  : "flex flex-row items-center gap-x-1 rounded-xl p-3 hover:bg-white hover:bg-opacity-20 transition-all"
+              }
+            >
               <Settings color="white" />
               <p className="text-white font-semibold text-xl">Settings</p>
-            </div>
+            </NavLink>
           </div>
         </div>
       </div>
