@@ -1,5 +1,5 @@
 import { Book, Calendar1Icon, LogOut, Settings } from "lucide-react";
-import Image from "../assets/image.jpg";
+import UserImage from "../assets/user-picture.png";
 import { NavLink } from "react-router";
 
 export default function SideBar() {
@@ -10,7 +10,7 @@ export default function SideBar() {
         <div className="p-1 mb-2">
           <div className="flex items-center justify-center p-2">
             <img
-              src={Image}
+              src={UserImage}
               alt="avatar"
               className="h-[131px] aspect-square rounded-full"
             />
