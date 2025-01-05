@@ -1,4 +1,4 @@
-import { Book, Calendar1Icon, LogOut, Settings } from "lucide-react";
+import { BookOpen, Calendar1Icon, LogOut, Settings } from "lucide-react";
 import UserImage from "../assets/user-picture.png";
 import { NavLink } from "react-router";
 
@@ -43,7 +43,7 @@ export default function SideBar() {
                   : "flex flex-row items-center gap-x-1 rounded-xl p-3 hover:bg-white hover:bg-opacity-20 transition-all"
               }
             >
-              <Book color="white" />
+              <BookOpen color="white" />
               <p className="text-white font-semibold text-xl">Courses</p>
             </NavLink>
           </div>
