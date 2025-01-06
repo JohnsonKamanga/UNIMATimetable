@@ -4,10 +4,22 @@ import axios from "axios";
 import { baseurl } from "../constants/url";
 
 export default function Timetable() {
-
   const [timetableData, setTimetableData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const renderTableRow = (row, index: number) => {
+  const renderTableRow = (
+    row: {
+      venue: string;
+      id: number;
+      scheduled_time: string;
+      course: {
+        id: number;
+        course_code: string;
+        year_taken: number;
+        semester: number;
+      };
+    }[],
+    index: number
+  ) => {
     return (
       <tr key={index}>
         <td className="p-1 h-[70px] w-[120px] flex flex-col items-center justify-start border-b-[2px] border-r-[2px] border-black border-opacity-10">
@@ -68,8 +80,7 @@ export default function Timetable() {
   };
 
   useEffect(() => {
-    axios
-      .get(`${baseurl}/timetable`, { userId: 1, name: "1736021039993" })
+    axios.get(`${baseurl}/timetable?userId=${1}&name=${"1736021039993"}`)
       .then((res) => {
         let sortedData = [];
         for (let i = 0; i < 9; i++) {
