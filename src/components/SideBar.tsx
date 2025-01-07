@@ -1,4 +1,4 @@
-import { BookOpen, Calendar1Icon, LogOut, Settings } from "lucide-react";
+import { BookOpen, Calendar1Icon, Home, LogOut, Settings } from "lucide-react";
 import UserImage from "../assets/user-picture.png";
 import { NavLink } from "react-router";
 
@@ -24,6 +24,19 @@ export default function SideBar() {
           <div>
             <NavLink
               to="/"
+              className={({ isActive }) =>
+                isActive
+                  ? "flex flex-row items-center gap-x-1 bg-white bg-opacity-10 rounded-xl p-3 hover:bg-white hover:bg-opacity-20 transition-all"
+                  : "flex flex-row items-center gap-x-1 rounded-xl p-3 hover:bg-white hover:bg-opacity-20 transition-all"
+              }
+            >
+              <Home color="white" />
+              <p className="text-white font-semibold text-xl">Home</p>
+            </NavLink>
+          </div>
+          <div>
+            <NavLink
+              to="/timetable"
               className={({ isActive }) =>
                 isActive
                   ? "flex flex-row items-center gap-x-1 bg-white bg-opacity-10 rounded-xl p-3 hover:bg-white hover:bg-opacity-20 transition-all"
