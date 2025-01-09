@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import TimetableCard from "../components/TimeTableCard";
 import axios from "axios";
 import { baseurl } from "../constants/url";
+import Loader from "../components/Loader";
+import { useParams } from "react-router";
 
 export default function Timetable() {
+  const { name } = useParams();
   const [timetableData, setTimetableData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const renderTableRow = (
@@ -65,7 +68,7 @@ export default function Timetable() {
             />
           )}
         </td>
-        <td className="h-[70px] w-[200px]">
+        <td className="h-[70px] w-[200px] border-b-[2px] border-black border-opacity-10">
           {row[4] && (
             <TimetableCard
               course={row[4]?.course.course_code}
@@ -80,8 +83,9 @@ export default function Timetable() {
   };
 
   useEffect(() => {
-    axios.get(`${baseurl}/timetable?userId=${1}&name=${"1736021039993"}`)
-      .then((res) => {
+    axios
+      .get(`${baseurl}/timetable/view?userId=${1}&name=${name}`)
+      .then(async (res) => {
         let sortedData = [];
         for (let i = 0; i < 9; i++) {
           sortedData.push([
@@ -91,10 +95,8 @@ export default function Timetable() {
             res.data?.thursday[i],
             res.data?.friday[i],
           ]);
-        }
+        };
         setTimetableData(sortedData);
-        console.log(res.data);
-        console.log(sortedData);
         setLoading(false);
       })
       .catch((err) => {
@@ -103,7 +105,13 @@ export default function Timetable() {
   }, []);
 
   if (loading) {
-    return <div>loading...</div>;
+    return (
+      <div className="w-full flex flex-grow">
+        <div className="h-full w-full flex items-center justify-center bg-black bg-opacity-25">
+          <Loader />
+        </div>
+      </div>
+    );
   }
 
   return (
