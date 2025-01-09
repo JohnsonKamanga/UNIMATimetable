@@ -5,6 +5,8 @@ import Courses from "./pages/Courses";
 import Settings from "./pages/Settings";
 import SearchBar from "./components/SearcBar";
 import { FormEvent } from "react";
+import Home from "./pages/Home";
+import TimeTables from "./pages/TimeTables";
 
 function App() {
   const placeholders = [
@@ -18,7 +20,7 @@ function App() {
         <div>
           <SideBar />
         </div>
-        <div className="w-full h-lvh overflow-y-scroll relative">
+        <div className="w-full h-lvh flex flex-col overflow-y-scroll relative">
           <SearchBar
             placeholder={placeholders[0]}
             handleSearch={(event: FormEvent<HTMLElement>, query: string) => {
@@ -27,7 +29,11 @@ function App() {
             }}
           />
           <Routes>
-            <Route index element={<Timetable />} />
+            <Route index element={<Home />} />
+            <Route path="timetable">
+                  <Route index element={<TimeTables/>}/>
+                  <Route path=":name" element={<Timetable/>}/>
+            </Route>
             <Route path="courses" element={<Courses />} />
             <Route path="settings" element={<Settings />} />
           </Routes>
