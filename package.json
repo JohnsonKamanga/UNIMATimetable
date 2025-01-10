@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@requestly/web-sdk": "^0.15.1",
     "axios": "^1.7.9",
     "framer-motion": "^11.15.0",
     "lucide-react": "^0.469.0",
