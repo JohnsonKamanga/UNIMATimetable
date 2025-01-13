@@ -1,19 +1,25 @@
 import axios from "axios";
-import { FormEvent, SetStateAction, useState } from "react";
+import { SetStateAction } from "react";
 import { baseurl } from "../constants/url";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from 'yup';
+import { useForm } from "react-hook-form";
+
+const schema = yup.object({
+  username: yup.string().required("Username is required"),
+  password: yup.string().required("Password is required"),
+  timetableName: yup.string().required("Timetable name is required"),
+}).required()
 
 export function TimetableGenerationForm({ userid, setFormVisible }: { userid: number, setFormVisible: React.Dispatch<SetStateAction<boolean>> }) {
-  const [password, SetPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [timetableName, setTimetableName] = useState("");
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const {register, formState: {errors}, handleSubmit} = useForm({
+    resolver: yupResolver(schema)
+  })
+  const onSubmit = async (data: {username:string;password:string;timetableName:string;}) => {
     try {
       const res = (
         await axios.post(`${baseurl}/timetable`, {
-          username,
-          password,
-          timetableName,
+          ...data,
           userid: userid,
         })
       ).data;
@@ -23,33 +29,32 @@ export function TimetableGenerationForm({ userid, setFormVisible }: { userid: nu
     }
   };
   return (
-        <form className="form-style" onSubmit={handleSubmit}>
+        <form className="form-style" onSubmit={handleSubmit(onSubmit)}>
           <h2 className="text-xl text-center font-bold">
             Create A New Timetable Using The Student Portal
           </h2>
           <div className="form-input-field-style">
             <label className="form-label-style">Username</label>
-            <input onChange={(e)=>{
-                setUsername(e.target.value);
-            }} 
+            <input 
+            {...register('username')}
             className="form-input-style" placeholder="Your username" />
+            <p className="text-[#ff0000] font-semibold">{errors.username?.message}</p>
           </div>
           <div className="form-input-field-style">
             <label className="form-label-style">Password</label>
-            <input onChange={(e)=>{
-                SetPassword(e.target.value);
-            }} 
+            <input 
+            {...register('password')}
             className="form-input-style" placeholder="Your password" />
+            <p className="text-[#ff0000] font-semibold">{errors.password?.message}</p>
           </div>
           <div className="form-input-field-style">
             <label className="form-label-style">Timetable Name</label>
             <input
-            onChange={(e)=>{
-                setTimetableName(e.target.value);
-            }}
+            {...register('timetableName')}
               className="form-input-style"
               placeholder="Name of new timetable"
             />
+            <p className="text-[#ff0000] font-semibold">{errors.timetableName?.message}</p>
           </div>
           <div className="flex flex-row gap-x-5">
             <button 
