@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.form-style{
+    @apply p-5 bg-white border-[1px] border-black border-opacity-20 w-[350px] flex flex-col rounded-lg items-center justify-center;
+}
+
+.form-input-field-style{
+    @apply p-2 w-full flex flex-col;
+}
+
+.form-input-style{
+    @apply bg-transparent w-full p-2 rounded-md placeholder:text-black placeholder:text-opacity-70 font-light focus:outline-none focus:ring border-[1px] border-black border-opacity-40;
+}
+
+.form-label-style{
+    @apply font-semibold text-start text-lg;
+}
+
+.form-button{
+    @apply w-[100px] p-2 rounded-md font-bold mt-2; 
+}
