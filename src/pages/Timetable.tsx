@@ -25,8 +25,8 @@ export default function Timetable() {
   ) => {
     return (
       <tr key={index}>
-        <td className="p-1 h-[70px] w-[120px] flex flex-col items-center justify-start border-b-[2px] border-r-[2px] border-black border-opacity-10">
-          {(7 + index > 9 ? `${7 + index}` : "0" + `${7 + index}`) + ":30"}
+        <td className="p-1 h-[70px] w-[120px] flex flex-col items-center justify-center border-b-[2px] border-r-[2px] border-black border-opacity-10">
+          {index + 1}
         </td>
         <td className="h-[70px] w-[200px] border-b-[2px] border-r-[2px] border-black border-opacity-10">
           {row[0] && (
@@ -121,7 +121,7 @@ export default function Timetable() {
           <thead>
             <tr className="border-b-[2px] border-opacity-10 rounded-xl">
               <th className="p-1 border-b-[2px] border-r-[2px] border-black border-opacity-10">
-                Time
+                Period
               </th>
               <th className="p-1 border-b-[2px] border-r-[2px] border-black border-opacity-10">
                 Monday
