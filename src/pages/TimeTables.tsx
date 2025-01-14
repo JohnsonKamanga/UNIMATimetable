@@ -1,20 +1,21 @@
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { baseurl } from "../constants/url";
 import { NavLink } from "react-router";
 import { Theme } from "../constants/theme";
 import { Plus } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import Loader from "../components/Loader";
+import { TimetableGenerationForm } from "../components/TimetableGenerationForm";
+import { formatRelative } from "date-fns";
 
 export default function TimeTables() {
   const user = {
     id: 1,
   };
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [message, setMessage] = useState<string>();
   const [loading, setLoading] = useState(true);
-  const [showPopUp, setShowPopUp] = useState(false);
   const [timetables, setTimeTables] = useState([]);
+  const [formVisible, setFormVisible] = useState(false);
   const renderTimetablesList = (
     timetable: {
       id: number;
@@ -27,33 +28,39 @@ export default function TimeTables() {
     index: number
   ) => {
     return (
-      <tr key={index}>
-        <td>
+      <motion.tr
+        whileHover={{
+          scale: 1.005,
+        }}
+        key={index}
+        className="hover:bg-[#FCBF49] hover:shadow-md hover:bg-opacity-20 cursor-default"
+      >
+        <td className="p-2">
           <div className="w-full flex items-center justify-center">
             <NavLink
-              className="hover:text-red-500"
+              className="hover:text-white"
               to={`/timetable/${timetable.name}`}
             >
               {timetable.name}
             </NavLink>
           </div>
         </td>
-        <td>
+        <td className="p-2">
           <div className="w-full flex items-center justify-center">
             {timetable.academic_year}
           </div>
         </td>
-        <td>
+        <td className="p-2">
           <div className="w-full flex items-center justify-center">
             {timetable.semester}
           </div>
         </td>
-        <td>
+        <td className="p-2">
           <div className="w-full flex items-center justify-center">
-            {timetable.last_modified}
+            {formatRelative(timetable.last_modified, Date.now())}
           </div>
         </td>
-      </tr>
+      </motion.tr>
     );
   };
 
@@ -67,142 +74,36 @@ export default function TimeTables() {
       .catch((err) => {
         console.error("An error occured: ", err);
       });
-    window.addEventListener("message",async (ev) => {
-      console.log("message event triggered");
-      const m = (
-        await axios.get(
-          "https://students.unima.ac.mw/pages/timetable"
-        )
-      ).data;
-      console.log('timetable: ', m);
-      if (ev?.origin !== "http://localhost:5173") {
-        console.log(ev.origin);
-        console.log("returning...");
-        setMessage("none");
-        return;
-      }
-
-      console.log("message recieved: ", ev?.data);
-      setMessage(ev.data);
-    });
-
-    return () => {
-      window.removeEventListener("message", (ev) => {
-        console.log("message event triggered");
-        if (ev?.origin !== "http://localhost:5173") {
-          console.log("returning...");
-          setMessage("none");
-          return;
-        }
-
-        console.log("message recieved: ", ev?.data);
-        setMessage(ev.data);
-      });
-    };
   }, []);
 
   if (loading) {
-    return <div>loading...</div>;
+    return (
+      <div className={`bg-[${Theme.light.backgroundColor}] flex flex-col flex-grow p-2`}
+      >
+        <div className="h-full w-full flex items-center justify-center">
+          <Loader message="Fetching Timetables" />
+        </div>
+      </div>
+    );
   }
 
   return (
     <div
       className={`bg-[${Theme.light.backgroundColor}] flex flex-col flex-grow p-2`}
     >
-      <h1>list of timetables</h1>
+      <h1 className="p-1 text-3xl font-semibold mb-5">Your Timetables</h1>
       <table>
         <thead>
           <tr>
-            <th>name</th>
-            <th>academic year</th>
-            <th>semester</th>
-            <th>last modified</th>
+            <th>Name</th>
+            <th>Academic Year</th>
+            <th>Semester</th>
+            <th>Last Modified</th>
           </tr>
         </thead>
         <tbody>{timetables.map(renderTimetablesList)}</tbody>
       </table>
       <div className="absolute bottom-[95px] right-[85px]">
-        <AnimatePresence>
-          {showPopUp && (
-            <motion.div
-              variants={{
-                hidden: {
-                  scale: 0,
-                },
-                show: {
-                  scale: 1,
-                },
-              }}
-              exit="hidden"
-              initial="hidden"
-              animate="show"
-              className="z-20 flex flex-col gap-y-1 text-lg bg-[#FCBF49] rounded-xl text-white font-semibold p-5 text-center absolute w-[200px] -left-[80px] -top-[120px]"
-            >
-              <div className="hover:cursor-pointer">Create from scratch</div>
-              <div
-                className="hover:cursor-pointer"
-                onClick={async () => {
-                  try {
-                    // const w = window.open(
-                    //   "https://students.unima.ac.mw/login.php",
-                    //   "University of Malawi Students Portal",
-                    //   "popup"
-                    // );
-                    const w = window.open(
-                      "https://students.unima.ac.mw",
-                      "University of Malawi Students Portal",
-                      "popup"
-                    );
-                    console.log("checking window");
-                    // w.addEventListener("load",(ev) => {
-                    //   console.log('page loaded')
-                    //   w.addEventListener("submit", async (e) => {
-                    //     w.location = 'https://students.unima.ac.mw/pages/timetable/';
-                    //     const message = JSON.stringify(
-                    //       await (
-                    //         await w.fetch(
-                    //           "https://students.unima.ac.mw/pages/timetable/"
-                    //         )
-                    //       ).json()
-                    //     )
-                    //   console.log('fetched message: ', message)
-                    //     w.postMessage(message, `http://localhost:5137/timetable`);
-                    //   })
-                    // })
-                    //const message = JSON.stringify((await axios.get("https://students.unima.ac.mw/pages/timetable/")).data)
-
-                    //console.log('fetched message: ', message)
-                    // w?.addEventListener("submit", (e) => {
-                    //   w.addEventListener("load", async () => {
-                    //     const m = (
-                    //       await axios.get(
-                    //         "https://students.unima.ac.mw/pages/timetable"
-                    //       )
-                    //     ).data;
-                    //     w?.opener.postMessage(m, "http://localhost:5173");
-                    //     setMessage(m);
-                    //   });
-                    // });
-                    // const m = (
-                    //   await axios.get(
-                    //     "https://students.unima.ac.mw/pages/timetable"
-                    //   )
-                    // ).data;
-                    w?.opener.postMessage('hello world', "http://localhost:5173");
-                    console.log("message sent");
-                  } catch (err) {
-                    console.error(
-                      "An error occured during popup generation: ",
-                      err
-                    );
-                  }
-                }}
-              >
-                generate portal
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
         <motion.button
           whileTap={{
             scale: 0.9,
@@ -211,38 +112,34 @@ export default function TimeTables() {
             scale: 1.1,
           }}
           onClick={() => {
-            setShowPopUp(!showPopUp);
+            setFormVisible(true);
           }}
           className="bg-[#FCBF49] relative z-10 p-3 rounded-full border-[2px] border-black border-opacity-10"
         >
           <Plus color="white" />
         </motion.button>
       </div>
-      <>
-        <iframe
-          ref={iframeRef}
-          className="aspect-video"
-          src="https://students.unima.ac.mw/pages/timetable"
-        />
-        <button
-          onClick={(ev) => {
-            if (!iframeRef.current) {
-              console.log("no ref");
-              return;
-            }
-            console.log("your node: ", iframeRef.current.DOCUMENT_NODE);
-            iframeRef.current.contentWindow?.parent.postMessage(
-              "hello from iframe",
-              "http://localhost:5173"
-            );
-            console.log("iframe message sent");
-          }}
-          className="bg-red-900 rounded-xl p-2"
-        >
-          click
-        </button>
-        {message ? <p>{message}</p> : <p>No message</p>}
-      </>
+      <AnimatePresence>
+        {formVisible && (
+          <motion.div
+            initial={{
+              scale: 0,
+            }}
+            animate={{
+              scale: 1,
+            }}
+            exit={{
+              scale: 0,
+            }}
+            className="absolute top-0 left-0 backdrop-blur-md z-30 flex flex-col h-full w-full flex-grow items-center justify-center bg-black bg-opacity-40"
+          >
+            <TimetableGenerationForm
+              setFormVisible={setFormVisible}
+              userid={user.id}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
