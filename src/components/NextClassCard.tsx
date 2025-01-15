@@ -55,6 +55,9 @@ export default function NextClassCard({
   const calculateRemainingTime = (time: string) => {
     const nextClass = getNextClassTime(time);
     const delta = nextClass.getTime() - Date.now();
+    if(delta <= 0){
+      return '00:00:00'
+  }
     const hours = Math.floor(delta / 3600000);
     const rem1 = delta - hours * 3600000;
     const mins = Math.floor(rem1 / 60000);
@@ -79,7 +82,7 @@ export default function NextClassCard({
   }, [remTime]);
 
   return (
-    <div className="flex flex-row gap-x-2 border-[1px] bg-[#EAE2B7] border-black w-fit p-2 rounded-xl border-opacity-20 shadow-lg">
+    <div className="flex flex-row gap-x-2 border-[1px] bg-[#EAE2B7] border-black w-fit p-3 rounded-xl border-opacity-20 shadow-lg">
       <div className="flex flex-col min-w-[160px] gap-y-1">
         <div className="flex items-center gap-x-2 p-[9px] bg-black bg-opacity-20 w-fit border-black border-[1px] border-opacity-30 shadow-lg rounded-3xl">
           <div className="border-[2px] border-black rounded-full p-1 flex items-center justify-center">
