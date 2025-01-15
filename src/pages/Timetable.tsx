@@ -108,7 +108,7 @@ export default function Timetable() {
     return (
       <div className="w-full flex flex-grow">
         <div className="h-full w-full flex items-center justify-center bg-black bg-opacity-25">
-          <Loader />
+          <Loader message="Fetching Timetable Data"/>
         </div>
       </div>
     );
