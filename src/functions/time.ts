@@ -1,5 +1,18 @@
 import { isAfter, isBefore, isEqual } from "date-fns";
 
+export type TClassPeriod = {
+  id: number;
+  scheduled_time: string;
+  venue: string;
+  course: {
+    id: number;
+    course_code: string;
+    year_taken: number;
+    semester: number;
+  };
+};
+
+
 const currentDate = new Date(Date.now());
 export const currentDateString =
   currentDate.getUTCFullYear() +
