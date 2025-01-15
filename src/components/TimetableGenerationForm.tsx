@@ -31,6 +31,7 @@ export function TimetableGenerationForm({
     resolver: yupResolver(schema),
   });
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data: {
     username: string;
@@ -75,6 +76,7 @@ export function TimetableGenerationForm({
           {...register("password")}
           className="form-input-style"
           placeholder="Your password"
+          type={showPassword ? "text" : "password"}
         />
         <p className="text-[#ff0000] font-semibold">
           {errors.password?.message}
@@ -100,6 +102,16 @@ export function TimetableGenerationForm({
         <p className="font-semibold hover:cursor-default">
           Set as current timetable
         </p>
+      </div>
+      <div className="p-2 gap-x-2 w-full flex items-center justify-start">
+        <input
+          type="checkbox"
+          className="accent-[#FCBF49] hover:accent-[#F77F00] transition-colors"
+          onChange={() => {
+            setShowPassword(!showPassword);
+          }}
+        />
+        <p className="font-semibold hover:cursor-default">Show password</p>
       </div>
       <AnimatePresence>
         {loading ? (
