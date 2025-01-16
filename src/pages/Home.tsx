@@ -46,6 +46,9 @@ export default function Home() {
     ) {
       setCurrentClass(today[currentPeriod - 1]);
     }
+    else{
+      setCurrentClass(undefined);
+    }
 
     //check for next class today
     for (let i = currentPeriod; i < today.length; i++) {
@@ -171,13 +174,13 @@ export default function Home() {
         <div className="grid grid-cols-2">
           <div className="p-2 border-r-[1px] border-black">
             <h2 className="font-bold text-xl mb-2">Today's classes</h2>
-            <div className="flex flex-col gap-y-2">
+            <div className="flex flex-col items-center gap-y-2">
               {todaysSchedule.map(drawSchedule)}
             </div>
           </div>
           <div className="p-2">
             <h2 className="font-bold text-xl mb-2">Next Day's classes</h2>
-            <div className="flex flex-col gap-y-2">
+            <div className="flex flex-col items-center gap-y-2">
               {nextDaysSchedule.map(drawSchedule)}
             </div>
           </div>
