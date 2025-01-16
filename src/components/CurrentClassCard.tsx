@@ -59,7 +59,8 @@ export default function CurrentClassCard({
 
   useEffect(() => {
     const timeout = setInterval(() => {
-      setRemTime(() => calculateRemainingTime(currentClass.scheduled_time));
+      const t = calculateRemainingTime(currentClass.scheduled_time);
+      setRemTime(t);
     }, 1000);
 
     return () => clearInterval(timeout);
