@@ -1,18 +1,33 @@
 import { isFriday, isWeekend, nextMonday, startOfTomorrow } from "date-fns";
 import { BookOpen, Building2, Clock4 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getPeriodStartTime, getPeriodTime } from "../functions/time";
+import {
+  getCurrentPeriod,
+  getPeriodStartTime,
+  getPeriodTime,
+  TClassPeriod,
+} from "../functions/time";
 
 export default function NextClassCard({
   code,
   venue,
   time,
   lastClassTime,
+  todaysSchedule,
+  nextDaysSchedule,
+  setCurrentAndNextClass,
 }: {
   code: string;
   venue: string;
   time: string;
   lastClassTime: string | undefined;
+  todaysSchedule: any[];
+  nextDaysSchedule: any[];
+  setCurrentAndNextClass: (
+    today: TClassPeriod[],
+    nextDay: TClassPeriod[],
+    currentPeriod: number
+  ) => void;
 }) {
   const getNextClassTime = (time: string): Date => {
     const slot = time[time.length - 1];
@@ -55,9 +70,14 @@ export default function NextClassCard({
   const calculateRemainingTime = (time: string) => {
     const nextClass = getNextClassTime(time);
     const delta = nextClass.getTime() - Date.now();
-    if(delta <= 0){
-      return '00:00:00'
-  }
+    if (delta <= 0) {
+      setCurrentAndNextClass(
+        todaysSchedule,
+        nextDaysSchedule,
+        getCurrentPeriod()
+      );
+      return "00:00:00";
+    }
     const hours = Math.floor(delta / 3600000);
     const rem1 = delta - hours * 3600000;
     const mins = Math.floor(rem1 / 60000);
@@ -75,7 +95,8 @@ export default function NextClassCard({
 
   useEffect(() => {
     const timeout = setInterval(() => {
-      setRemTime(() => calculateRemainingTime(time));
+      const t = calculateRemainingTime(time);
+      setRemTime(t);
     }, 1000);
 
     return () => clearInterval(timeout);

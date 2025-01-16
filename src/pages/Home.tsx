@@ -13,8 +13,9 @@ import {
   isWednesday,
 } from "date-fns";
 import NextClassCard from "../components/NextClassCard";
-import { getCurrentPeriod, getPeriodTime, TClassPeriod, times } from "../functions/time";
+import { getCurrentPeriod, TClassPeriod, times } from "../functions/time";
 import CurrentClassCard from "../components/CurrentClassCard";
+import ListClassCard from "../components/ListClassCard";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -23,23 +24,12 @@ export default function Home() {
   const [currentClass, setCurrentClass] = useState<TClassPeriod>();
   const [lastClassForToday, setLastClassForToday] = useState<TClassPeriod>();
   const [nextClass, setNextClass] = useState<TClassPeriod>();
-  const [nextDaysSchedule, setnextDaysSchedule] = useState([]);
+  const [nextDaysSchedule, setnextDaysSchedule] = useState<any[]>([]);
   const drawSchedule = (classPeriod: TClassPeriod | null, index: number) => {
     if (!classPeriod) {
       return;
     }
-    //get the last digit in the scheduled time
-    const period =
-      classPeriod.scheduled_time[classPeriod.scheduled_time.length - 1];
-    const time = getPeriodTime(period);
-
-    return (
-      <div key={index} className="bg-blue-500 p-2">
-        <div>{classPeriod.course.course_code}</div>
-        <div>{classPeriod.venue}</div>
-        <div>{time}</div>
-      </div>
-    );
+    return <ListClassCard key={index} classPeriod={classPeriod} />;
   };
 
   const setCurrentAndNextClass = (
@@ -78,8 +68,8 @@ export default function Home() {
     }
 
     //find lastClass for today
-    for(let i = today.length - 1 ; i< today.length ; i-- ){
-      if(today[i]){
+    for (let i = today.length - 1; i < today.length; i--) {
+      if (today[i]) {
         setLastClassForToday(today[i]);
         break;
       }
@@ -144,9 +134,18 @@ export default function Home() {
             <h2 className="font-bold text-xl mb-2">Current Class</h2>
             <div>
               {currentClass ? (
-                <CurrentClassCard currentClass={currentClass}/>
+                <CurrentClassCard
+                  currentClass={currentClass}
+                  todaysSchedule={todaysSchedule}
+                  nextDaysSchedule={nextDaysSchedule}
+                  setCurrentAndNextClass={setCurrentAndNextClass}
+                />
               ) : (
-                <div><p className="text-black text-lg font-semibold text-opacity-45 ">No class on going</p></div>
+                <div>
+                  <p className="text-black text-lg font-semibold text-opacity-45 ">
+                    No class on going
+                  </p>
+                </div>
               )}
             </div>
           </div>
@@ -159,6 +158,9 @@ export default function Home() {
                   venue={nextClass.venue}
                   time={nextClass.scheduled_time}
                   lastClassTime={lastClassForToday?.scheduled_time}
+                  todaysSchedule={todaysSchedule}
+                  nextDaysSchedule={nextDaysSchedule}
+                  setCurrentAndNextClass={setCurrentAndNextClass}
                 />
               ) : (
                 <div>No class to be scheduled next</div>

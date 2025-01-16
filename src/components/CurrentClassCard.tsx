@@ -1,5 +1,6 @@
 import { BookOpen, Building2, Clock4 } from "lucide-react";
 import {
+  getCurrentPeriod,
   getPeriodStartTime,
   getPeriodTime,
   TClassPeriod,
@@ -8,14 +9,23 @@ import { useEffect, useState } from "react";
 
 export default function CurrentClassCard({
   currentClass,
+  todaysSchedule,
+  nextDaysSchedule,
+  setCurrentAndNextClass,
 }: {
   currentClass: TClassPeriod;
+  todaysSchedule: any[];
+  nextDaysSchedule: any[];
+  setCurrentAndNextClass: (
+    today: TClassPeriod[],
+    nextDay: TClassPeriod[],
+    currentPeriod: number
+  ) => void;
 }) {
   const [remTime, setRemTime] = useState("");
 
   const calculateRemainingTime = (time: string) => {
-    const startTimeSlot =
-      time[time.length - 1];
+    const startTimeSlot = time[time.length - 1];
     const endTimeSlot = String(Number(startTimeSlot) + 1);
     const endTime = getPeriodStartTime(endTimeSlot);
     const endOfPeriod = new Date(Date.now());
@@ -25,8 +35,13 @@ export default function CurrentClassCard({
       0
     );
     const delta = endOfPeriod.getTime() - Date.now();
-    if(delta <= 0){
-        return '00:00:00'
+    if (delta <= 0) {
+      setCurrentAndNextClass(
+        todaysSchedule,
+        nextDaysSchedule,
+        getCurrentPeriod()
+      );
+      return "00:00:00";
     }
     const hours = Math.floor(delta / 3600000);
     const rem1 = delta - hours * 3600000;
@@ -42,13 +57,12 @@ export default function CurrentClassCard({
     );
   };
 
-
   useEffect(() => {
     const timeout = setInterval(() => {
-        setRemTime(() => calculateRemainingTime(currentClass.scheduled_time));
-      }, 1000);
-  
-      return () => clearInterval(timeout);
+      setRemTime(() => calculateRemainingTime(currentClass.scheduled_time));
+    }, 1000);
+
+    return () => clearInterval(timeout);
   }, [remTime]);
 
   return (
@@ -70,7 +84,13 @@ export default function CurrentClassCard({
           <div className="border-[2px] border-white rounded-full p-1 flex items-center justify-center">
             <Clock4 size={16} />
           </div>
-          <p className="font-bold">{getPeriodTime(currentClass.scheduled_time[currentClass.scheduled_time.length - 1])}</p>
+          <p className="font-bold">
+            {getPeriodTime(
+              currentClass.scheduled_time[
+                currentClass.scheduled_time.length - 1
+              ]
+            )}
+          </p>
         </div>
       </div>
       <div className="w-[145px] text-center aspect-square rounded-lg bg-white bg-opacity-40 border-[1px] border-black border-opacity-25 shadow-md">
