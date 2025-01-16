@@ -45,19 +45,19 @@ export default function Home() {
           isBefore(Date.now(), times[currentPeriod])))
     ) {
       setCurrentClass(today[currentPeriod - 1]);
-    }
-    else{
+    } else {
       setCurrentClass(undefined);
     }
 
-    //check for next class today
-    for (let i = currentPeriod; i < today.length; i++) {
-      if (today[i]) {
-        setNextClass(today[i]);
-        foundNext = true;
-        break;
+    //check for next class today. periods start from 1, so if it's 0 then it is outside normal time
+    if (currentPeriod !== 0)
+      for (let i = currentPeriod; i < today.length; i++) {
+        if (today[i]) {
+          setNextClass(today[i]);
+          foundNext = true;
+          break;
+        }
       }
-    }
 
     //check for next class in the next day
     if (!foundNext) {
