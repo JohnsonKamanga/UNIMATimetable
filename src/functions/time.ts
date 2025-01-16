@@ -12,7 +12,6 @@ export type TClassPeriod = {
   };
 };
 
-
 const currentDate = new Date(Date.now());
 export const currentDateString =
   currentDate.getUTCFullYear() +
@@ -176,6 +175,9 @@ export function getPeriodStartTime(period: string): string {
     }
     case "9": {
       return "15:30";
+    }
+    case "10": {
+      return "16:30";
     }
     default: {
       return "Class is scheduled outside normal time";
