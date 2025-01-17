@@ -184,3 +184,26 @@ export function getPeriodStartTime(period: string): string {
     }
   }
 }
+
+export function getDayAndPeriodTime(dayAndPeriod: string){
+  const day = Number(dayAndPeriod) < 10 ? "0" : dayAndPeriod[0];
+  const period = getPeriodTime(dayAndPeriod[dayAndPeriod.length - 1]);
+  switch(day){
+
+  case "0": {
+    return "Monday from " + period;
+  }
+  case "1": {
+    return "Tuesday from " + period;
+  }
+  case "2": {
+    return "Wednesday from " + period;
+  }
+  case "3": {
+    return "Thursday from " + period;
+  }
+  case "4": {
+    return "Friday from " + period;
+  }
+}
+}
