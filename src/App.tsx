@@ -38,8 +38,9 @@ function App() {
             </Route>
             <Route path="courses" element={<Courses />} />
             <Route path="settings">
-              <Route index element={<AccountInfo/>}/>
-              <Route path="/appearance" element={<Appearance/>}/>
+              <Route index element={<Settings/>}/>
+              <Route path="account-info/:username" element={<AccountInfo/>}/>
+              <Route path="appearance" element={<Appearance/>}/>
             </Route>
           </Routes>
         </div>
