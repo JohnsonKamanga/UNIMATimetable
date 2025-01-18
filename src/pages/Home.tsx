@@ -71,6 +71,7 @@ export default function Home() {
     }
 
     //find lastClass for today
+    if(today.length > 0)
     for (let i = today.length - 1; i < today.length; i--) {
       if (today[i]) {
         setLastClassForToday(today[i]);
@@ -116,6 +117,7 @@ export default function Home() {
       })
       .catch((err) => {
         console.error("An error occured: ", err);
+        alert('error')
       });
   }, []);
 
