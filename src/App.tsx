@@ -7,6 +7,8 @@ import SearchBar from "./components/SearcBar";
 import { FormEvent } from "react";
 import Home from "./pages/Home";
 import TimeTables from "./pages/TimeTables";
+import AccountInfo from "./pages/AccountInfo";
+import Appearance from "./pages/Appearance";
 
 function App() {
   const placeholders = [
@@ -35,7 +37,10 @@ function App() {
                   <Route path=":name" element={<Timetable/>}/>
             </Route>
             <Route path="courses" element={<Courses />} />
-            <Route path="settings" element={<Settings />} />
+            <Route path="settings">
+              <Route index element={<AccountInfo/>}/>
+              <Route path="/appearance" element={<Appearance/>}/>
+            </Route>
           </Routes>
         </div>
       </div>
