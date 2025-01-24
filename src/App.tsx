@@ -33,14 +33,13 @@ function App() {
           <Routes>
             <Route index element={<Home />} />
             <Route path="timetable">
-                  <Route index element={<TimeTables/>}/>
-                  <Route path=":name" element={<Timetable/>}/>
+              <Route index element={<TimeTables />} />
+              <Route path=":name" element={<Timetable />} />
             </Route>
             <Route path="courses" element={<Courses />} />
-            <Route path="settings">
-              <Route index element={<Settings/>}/>
-              <Route path="account-info/:username" element={<AccountInfo/>}/>
-              <Route path="appearance" element={<Appearance/>}/>
+            <Route path="settings" element={<Settings />}>
+              <Route index element={<Appearance />} />
+              <Route path="account-info/:username" element={<AccountInfo />} />
             </Route>
           </Routes>
         </div>
