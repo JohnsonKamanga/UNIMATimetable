@@ -29,7 +29,10 @@ export default function Home() {
     if (!classPeriod) {
       return;
     }
-    return <ListClassCard key={index} classPeriod={classPeriod} />;
+    return (
+    <div className={`col-start-${index+1}`}>
+    <ListClassCard key={index} classPeriod={classPeriod} />
+    </div>);
   };
 
   const setCurrentAndNextClass = (
@@ -38,6 +41,8 @@ export default function Home() {
     currentPeriod: number
   ) => {
     let foundNext = false;
+    const endOfTeaching = new Date(Date.now());
+    endOfTeaching.setHours(16,30,0);
     if (
       today[currentPeriod - 1] &&
       (isEqual(Date.now(), times[currentPeriod - 1]) ||
@@ -50,7 +55,7 @@ export default function Home() {
     }
 
     //check for next class today. periods start from 1, so if it's 0 then it is outside normal time
-    if (currentPeriod !== 0)
+    if (currentPeriod !== 0 || isBefore(Date.now(), endOfTeaching))
       for (let i = currentPeriod; i < today.length; i++) {
         if (today[i]) {
           setNextClass(today[i]);
@@ -134,7 +139,7 @@ export default function Home() {
   return (
     <div className="flex flex-grow flex-col bg-[#F8F7F7]">
       <div className="min-h-full flex flex-col">
-        <div className="h-fit p-2 grid grid-cols-2">
+        <div className="h-fit backdrop-blur-lg p-2 grid grid-cols-2">
           <div className="p-1 flex flex-col items-center">
             <h2 className="font-bold text-xl mb-2">Current Class</h2>
             <div>
@@ -176,13 +181,13 @@ export default function Home() {
         <div className="grid grid-cols-2">
           <div className="p-2 border-r-[1px] border-black">
             <h2 className="font-bold text-xl mb-2">Today's classes</h2>
-            <div className="flex flex-col items-center gap-y-2">
+            <div className="grid grid-cols-5 rows-2 items-center gap-2">
               {todaysSchedule.map(drawSchedule)}
             </div>
           </div>
           <div className="p-2">
             <h2 className="font-bold text-xl mb-2">Next Day's classes</h2>
-            <div className="flex flex-col items-center gap-y-2">
+            <div className="grid grid-cols-5 rows-2 items-center gap-2">
               {nextDaysSchedule.map(drawSchedule)}
             </div>
           </div>
