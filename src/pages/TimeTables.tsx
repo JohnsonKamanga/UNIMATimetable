@@ -39,7 +39,7 @@ export default function TimeTables() {
           <div className="w-full flex items-center justify-center">
             <NavLink
               className="hover:text-white"
-              to={`/timetable/${timetable.name}`}
+              to={`/dashboard/timetable/${timetable.name}`}
             >
               {timetable.name}
             </NavLink>

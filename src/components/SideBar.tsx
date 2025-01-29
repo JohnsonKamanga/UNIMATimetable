@@ -1,8 +1,9 @@
 import { BookOpen, Calendar1Icon, Home, LogOut, Settings } from "lucide-react";
 import UserImage from "../assets/user-picture.png";
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
 
 export default function SideBar() {
+  const path = useLocation();
   return (
     <div className="h-lvh w-[271px] flex flex-col justify-between bg-[#003049]">
       <div>
@@ -23,9 +24,9 @@ export default function SideBar() {
         <div className="gap-y-3 p-2">
           <div>
             <NavLink
-              to="/"
+              to="/dashboard"
               className={({ isActive }) =>
-                isActive
+                isActive && path.pathname === "/dashboard"
                   ? "flex flex-row items-center gap-x-1 bg-white bg-opacity-10 rounded-xl p-3 hover:bg-white hover:bg-opacity-20 transition-all"
                   : "flex flex-row items-center gap-x-1 rounded-xl p-3 hover:bg-white hover:bg-opacity-20 transition-all"
               }
@@ -36,7 +37,7 @@ export default function SideBar() {
           </div>
           <div>
             <NavLink
-              to="/timetable"
+              to="/dashboard/timetable"
               className={({ isActive }) =>
                 isActive
                   ? "flex flex-row items-center gap-x-1 bg-white bg-opacity-10 rounded-xl p-3 hover:bg-white hover:bg-opacity-20 transition-all"
@@ -49,7 +50,7 @@ export default function SideBar() {
           </div>
           <div>
             <NavLink
-              to="/courses"
+              to="/dashboard/courses"
               className={({ isActive }) =>
                 isActive
                   ? "flex flex-row items-center gap-x-1 bg-white bg-opacity-10 rounded-xl p-3 hover:bg-white hover:bg-opacity-20 transition-all"
@@ -62,7 +63,7 @@ export default function SideBar() {
           </div>
           <div>
             <NavLink
-              to="/settings"
+              to="/dashboard/settings"
               className={({ isActive }) =>
                 isActive
                   ? "flex flex-row items-center gap-x-1 bg-white bg-opacity-10 rounded-xl p-3 hover:bg-white hover:bg-opacity-20 transition-all"
