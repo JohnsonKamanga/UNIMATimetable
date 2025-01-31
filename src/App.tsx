@@ -10,6 +10,8 @@ import Dashboard from "./pages/Dashboard";
 import Landing from "./pages/Landing";
 import { UserContext } from "./user-context";
 import { useUser } from "./hooks/useUser";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
 function App() {
   const { user, setUser } = useUser();
@@ -23,6 +25,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<Landing />} />
+          <Route path="/signin" element={<SignIn/>}/>
+          <Route path="/signUp" element={<SignUp/>}/>
           <Route path="/dashboard" element={<Dashboard />}>
             <Route index element={<Home />} />
             <Route path="timetable">
