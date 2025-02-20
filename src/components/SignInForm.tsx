@@ -45,7 +45,7 @@ export function SignInForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-fit p-10 bg-white border-[1px] border-black border-opacity-20 flex flex-col rounded-lg"
+      className="w-fit p-10 bg-white border-[1px] shadow-2xl border-black border-opacity-20 flex flex-col rounded-lg"
     >
       <div className=" w-[450px] p-2 flex flex-col">
         <label className="form-label-style">Username</label>

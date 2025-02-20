@@ -4,6 +4,7 @@ import axios from "axios";
 import { baseurl } from "../constants/url";
 import Loader from "../components/Loader";
 import { useParams } from "react-router";
+import { getPeriodTime } from "../functions/time";
 
 export default function Timetable() {
   const { name } = useParams();
@@ -33,8 +34,8 @@ export default function Timetable() {
             <TimetableCard
               course={row[0]?.course?.course_code}
               venue={row[0]?.venue}
-              time="07:30 - 0830"
-              className="bg-[#D62828]"
+              time={getPeriodTime(row[0]?.scheduled_time)}
+              className="bg-[#D62828] text-white"
             />
           )}
         </td>
@@ -43,8 +44,8 @@ export default function Timetable() {
             <TimetableCard
               course={row[1]?.course.course_code}
               venue={row[1]?.venue}
-              time="1230 - 1330"
-              className="bg-[#FCBF49]"
+              time={getPeriodTime(row[1]?.scheduled_time)}
+              className="bg-[#FCBF49] text-black"
             />
           )}
         </td>
@@ -53,8 +54,8 @@ export default function Timetable() {
             <TimetableCard
               course={row[2]?.course.course_code}
               venue={row[2]?.venue}
-              time="1530 - 1630"
-              className="bg-[#F77F00]"
+              time={getPeriodTime(row[2]?.scheduled_time)}
+              className="bg-[#F77F00] text-white"
             />
           )}
         </td>
@@ -63,7 +64,7 @@ export default function Timetable() {
             <TimetableCard
               course={row[3]?.course.course_code}
               venue={row[3]?.venue}
-              time="1330 - 1430"
+              time={getPeriodTime(row[3]?.scheduled_time)}
               className="bg-[#EAE2B7] text-black"
             />
           )}
@@ -73,8 +74,8 @@ export default function Timetable() {
             <TimetableCard
               course={row[4]?.course.course_code}
               venue={row[4]?.venue}
-              time="09:30 - 1030"
-              className="bg-[#D62828]"
+              time={getPeriodTime(row[4]?.scheduled_time)}
+              className="bg-[#D62828] text-white"
             />
           )}
         </td>

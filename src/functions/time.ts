@@ -113,7 +113,8 @@ export function getCurrentPeriod() {
 }
 
 export function getPeriodTime(period: string): string {
-  switch (period) {
+  const p = period.length > 1 ? period[period.length - 1] : period
+  switch (p) {
     case "1": {
       return "07:30 - 08:30";
     }

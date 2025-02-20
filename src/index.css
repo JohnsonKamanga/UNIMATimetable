@@ -29,7 +29,13 @@
   }
   
   .card-bg-color-1 {
-    background: linear-gradient(300deg,#f74c06,#f9bc2c);
+    background: linear-gradient(300deg,#fc506e,#f9bc2c);
+    background-size: 120% 120%;
+    animation: gradient-animation 12s ease infinite;
+  }
+
+  .card-bg-color-3 {
+    background: linear-gradient(140deg,#fc506e,#003049);
     background-size: 120% 120%;
     animation: gradient-animation 12s ease infinite;
   }

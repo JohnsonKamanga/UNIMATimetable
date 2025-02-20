@@ -1,4 +1,4 @@
 import { createContext } from "react";
-import { TUser } from "./hooks/useUser";
+import { TUserCred } from "./hooks/useUser";
 
-export const UserContext = createContext<{user:TUser | undefined, setUser: ((u: TUser | undefined) => void)} | undefined>(undefined);
+export const UserContext = createContext<{user:TUserCred | undefined, setUser: ((u: TUserCred | undefined) => void)}>({user: undefined, setUser: (u: TUserCred | undefined)=>{}});

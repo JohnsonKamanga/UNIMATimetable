@@ -33,11 +33,11 @@ const profileSchema = yup
       .required("Email is required"),
     password: yup
       .string()
-      .required("Password must be provided")
+      .required("Password is required")
       .min(6, "Password must be atleast 6 characters long"),
     confirm_password: yup
       .string()
-      .required("Please enter confirm password")
+      .required("Confirm password is required")
       .oneOf([yup.ref("password")], "Passwords must match"),
   })
   .required();
@@ -116,8 +116,8 @@ export function SignUpForm() {
         />
         <p className="text-[#ff0000] font-semibold">{errors.email?.message}</p>
       </div>
-      <div className=" w-[450px] p-2 flex flex-col">
-        <label className="form-label-style">New Password</label>
+      <div className=" w-[500px] p-2 flex flex-col">
+        <label className="form-label-style">Password</label>
         <input
           {...register("password")}
           className="form-input-style"
@@ -127,7 +127,7 @@ export function SignUpForm() {
           {errors.password?.message}
         </p>
       </div>
-      <div className=" w-[450px] p-2 flex flex-col">
+      <div className=" w-[500px] p-2 flex flex-col">
         <label className="form-label-style">Confirm Password</label>
         <input
           {...register("confirm_password")}

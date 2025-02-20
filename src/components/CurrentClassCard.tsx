@@ -67,7 +67,7 @@ export default function CurrentClassCard({
   }, [remTime]);
 
   return (
-    <div className="flex flex-row gap-x-2 border-[1px] text-white bg-[#F77F00] border-black w-fit p-3 rounded-xl border-opacity-20 shadow-lg">
+    <div className="flex flex-row gap-x-2 border-[1px] text-white card-bg-color-1 border-black w-fit p-3 rounded-xl border-opacity-20 shadow-lg">
       <div className="flex flex-col min-w-[160px] gap-y-1">
         <div className="flex items-center gap-x-2 p-[9px] bg-white bg-opacity-20 w-fit border-black border-[1px] border-opacity-30 shadow-lg rounded-3xl">
           <div className="border-[2px] border-white rounded-full p-1 flex items-center justify-center">

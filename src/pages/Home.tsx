@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { baseurl } from "../constants/url";
 import axios from "axios";
 import Loader from "../components/Loader";
@@ -16,8 +16,10 @@ import NextClassCard from "../components/NextClassCard";
 import { getCurrentPeriod, TClassPeriod, times } from "../functions/time";
 import CurrentClassCard from "../components/CurrentClassCard";
 import ListClassCard from "../components/ListClassCard";
+import { UserContext } from "../user-context";
 
 export default function Home() {
+  const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
   const [currentTimetable, setCurrentTimeTable] = useState();
   const [todaysSchedule, setTodaysSchedule] = useState<any[]>([]);
@@ -30,9 +32,10 @@ export default function Home() {
       return;
     }
     return (
-    <div className={`col-start-${index+1}`}>
-    <ListClassCard key={index} classPeriod={classPeriod} />
-    </div>);
+      <div key={index} className={`col-start-${index + 1}`}>
+        <ListClassCard classPeriod={classPeriod} />
+      </div>
+    );
   };
 
   const setCurrentAndNextClass = (
@@ -42,7 +45,7 @@ export default function Home() {
   ) => {
     let foundNext = false;
     const endOfTeaching = new Date(Date.now());
-    endOfTeaching.setHours(16,30,0);
+    endOfTeaching.setHours(16, 30, 0);
     if (
       today[currentPeriod - 1] &&
       (isEqual(Date.now(), times[currentPeriod - 1]) ||
@@ -76,19 +79,19 @@ export default function Home() {
     }
 
     //find lastClass for today
-    if(today.length > 0)
-    for (let i = today.length - 1; i < today.length; i--) {
-      if (today[i]) {
-        setLastClassForToday(today[i]);
-        break;
+    if (today.length > 0)
+      for (let i = today.length - 1; i < today.length; i--) {
+        if (today[i]) {
+          setLastClassForToday(today[i]);
+          break;
+        }
       }
-    }
   };
 
   useEffect(() => {
     const c = getCurrentPeriod();
     axios
-      .get(`${baseurl}/timetable/view/current?userId=${1}`)
+      .get(`${baseurl}/timetable/view/current?userId=${user?.id}`)
       .then(async (res) => {
         setCurrentTimeTable(res.data);
         const now = Date.now();
@@ -122,7 +125,7 @@ export default function Home() {
       })
       .catch((err) => {
         console.error("An error occured: ", err);
-        alert('error')
+        alert("error");
       });
   }, []);
 
@@ -182,7 +185,15 @@ export default function Home() {
           <div className="p-2 border-r-[1px] border-black">
             <h2 className="font-bold text-xl mb-2">Today's classes</h2>
             <div className="grid grid-cols-5 rows-2 items-center gap-2">
-              {todaysSchedule.map(drawSchedule)}
+              {todaysSchedule.length > 0 ? (
+                <>{todaysSchedule.map(drawSchedule)}</>
+              ) : (
+                <div className="col-span-5">
+                  <p className="text-black text-lg font-semibold text-opacity-45 ">
+                    No classes today
+                  </p>
+                </div>
+              )}
             </div>
           </div>
           <div className="p-2">

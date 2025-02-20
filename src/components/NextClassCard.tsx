@@ -103,28 +103,28 @@ export default function NextClassCard({
   }, [remTime]);
 
   return (
-    <div className="flex flex-row gap-x-2 border-[1px] bg-[#EAE2B7] border-black w-fit p-3 rounded-xl border-opacity-20 shadow-lg">
+    <div className="flex flex-row gap-x-2 text-white border-[1px] card-bg-color-2 border-black w-fit p-3 rounded-xl border-opacity-20 shadow-lg">
       <div className="flex flex-col min-w-[160px] gap-y-1">
-        <div className="flex items-center gap-x-2 p-[9px] bg-black bg-opacity-20 w-fit border-black border-[1px] border-opacity-30 shadow-lg rounded-3xl">
-          <div className="border-[2px] border-black rounded-full p-1 flex items-center justify-center">
+        <div className="flex items-center gap-x-2 p-[9px] bg-white bg-opacity-20 w-fit border-black border-[1px] border-opacity-30 shadow-lg rounded-3xl">
+          <div className="border-[2px] border-white rounded-full p-1 flex items-center justify-center">
             <BookOpen size={16} />
           </div>
           <p className="font-bold">{code}</p>
         </div>
-        <div className="flex items-center gap-x-2 p-[9px] bg-black bg-opacity-20 w-fit border-black border-[1px] border-opacity-30 shadow-lg rounded-3xl">
-          <div className="border-[2px] border-black rounded-full p-1 flex items-center justify-center">
+        <div className="flex items-center gap-x-2 p-[9px] bg-white bg-opacity-20 w-fit border-black border-[1px] border-opacity-30 shadow-lg rounded-3xl">
+          <div className="border-[2px] border-white rounded-full p-1 flex items-center justify-center">
             <Building2 size={16} />
           </div>
           <p className="font-bold">{venue}</p>
         </div>
-        <div className="flex items-center gap-x-2 p-[9px] bg-black bg-opacity-20 w-fit border-black border-[1px] border-opacity-30 shadow-lg rounded-3xl">
-          <div className="border-[2px] border-black rounded-full p-1 flex items-center justify-center">
+        <div className="flex items-center gap-x-2 p-[9px] bg-white bg-opacity-20 w-fit border-black border-[1px] border-opacity-30 shadow-lg rounded-3xl">
+          <div className="border-[2px] border-white rounded-full p-1 flex items-center justify-center">
             <Clock4 size={16} />
           </div>
           <p className="font-bold">{getPeriodTime(time[time.length - 1])}</p>
         </div>
       </div>
-      <div className="w-[145px] text-center aspect-square rounded-lg bg-black bg-opacity-40 border-[1px] border-black border-opacity-25 shadow-md">
+      <div className="w-[145px] text-center aspect-square rounded-lg bg-white bg-opacity-40 border-[1px] border-black border-opacity-25 shadow-md">
         <div className="font-bold">Time until next class</div>
         <div className="font-semibold text-3xl">
           {remTime[0]}

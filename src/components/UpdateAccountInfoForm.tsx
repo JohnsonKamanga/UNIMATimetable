@@ -22,8 +22,8 @@ export type OptionalProps<Type> = {
 const profileSchema = yup
   .object({
     username: yup.string(),
-    first_name: yup.string(),
-    last_name: yup.string(),
+    first_name: yup.string().default(undefined),
+    last_name: yup.string().default(undefined),
     email: yup.string().email("Email must be valid"),
   })
   .required();
@@ -41,11 +41,26 @@ export function UpdateAccountInfo({ user }: { user: TUser }) {
 
   const onSubmitAccountInfo = async (data: OptionalProps<TUser>) => {
     setLoading(true);
+    console.log('submitting: ', data)
+    let payload: OptionalProps<TUser> = {
+        first_name: "",
+        last_name: "",
+        username: "",
+        email: "",
+    };
+    for(let key in payload){
+        if(data[key] === ''){
+            payload[key] = undefined;
+        }
+        else{
+            payload[key] = data[key];
+        }
+    } 
+    console.log(payload)
     try {
       const res = (
         await axios.put(`${baseurl}/user/account-info`, {
-          ...data,
-          id: user?.id,
+          ...payload, id:user.id
         })
       ).data;
       console.log("message: ", res);
@@ -60,11 +75,11 @@ export function UpdateAccountInfo({ user }: { user: TUser }) {
       onSubmit={handleSubmit(onSubmitAccountInfo)}
       className="w-fit p-10 bg-white border-[1px] border-black border-opacity-20 flex flex-col rounded-lg"
     >
-      <div className=" w-[600px] p-2 flex flex-col">
+      <div className=" w-[500px] p-2 flex flex-col">
         <label className="form-label-style">First name</label>
         <input
           disabled={!updateInfo}
-          {...register("last_name")}
+          {...register("first_name")}
           className="form-input-style"
           placeholder={user.first_name}
         />
@@ -72,7 +87,7 @@ export function UpdateAccountInfo({ user }: { user: TUser }) {
           {errors.first_name?.message}
         </p>
       </div>
-      <div className=" w-[600px] p-2 flex flex-col">
+      <div className=" w-[500px] p-2 flex flex-col">
         <label className="form-label-style">Last name</label>
         <input
           disabled={!updateInfo}
@@ -84,7 +99,7 @@ export function UpdateAccountInfo({ user }: { user: TUser }) {
           {errors.last_name?.message}
         </p>
       </div>
-      <div className=" w-[600px] p-2 flex flex-col">
+      <div className=" w-[500px] p-2 flex flex-col">
         <label className="form-label-style">Username</label>
         <input
           disabled={!updateInfo}
@@ -96,7 +111,7 @@ export function UpdateAccountInfo({ user }: { user: TUser }) {
           {errors.username?.message}
         </p>
       </div>
-      <div className=" w-[600px] p-2 flex flex-col">
+      <div className=" w-[500px] p-2 flex flex-col">
         <label className="form-label-style">Email</label>
         <input
           disabled={!updateInfo}

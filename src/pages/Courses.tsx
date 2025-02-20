@@ -1,13 +1,12 @@
 import axios from "axios";
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { baseurl } from "../constants/url";
 import Loader from "../components/Loader";
 import { CourseCard, TCourseInfo } from "../components/CourseCard";
+import { UserContext } from "../user-context";
 
 export default function Courses(){
-    const user = {
-        id: 1
-    }
+    const {user} = useContext(UserContext); 
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const drawCourses = (courseInfo: TCourseInfo, index: number)=>{
@@ -15,7 +14,7 @@ export default function Courses(){
     }
 
     useEffect(()=>{
-        axios.get(`${baseurl}/timetable/view/current/courses?userid=${user.id}`)
+        axios.get(`${baseurl}/timetable/view/current/courses?userid=${user?.id}`)
         .then((timetable)=>{
             setCourses(timetable.data);
             setLoading(false);

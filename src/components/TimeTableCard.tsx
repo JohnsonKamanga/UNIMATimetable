@@ -9,7 +9,7 @@ type TTimetableCard = {
 export default function TimetableCard(props : TTimetableCard){
     const {course, venue, time, className} = props;
     return(
-        <div className={className + " text-white p-1 h-full rounded-md border-[2px] border-black border-opacity-10 "}>
+        <div className={className + " p-1 h-full rounded-md border-[2px] border-black border-opacity-10 "}>
             <div className="font-bold text-lg">
             {course}
             </div>

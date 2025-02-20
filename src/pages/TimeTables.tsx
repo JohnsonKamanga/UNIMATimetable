@@ -1,18 +1,21 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { baseurl } from "../constants/url";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { Theme } from "../constants/theme";
 import { Plus } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import Loader from "../components/Loader";
 import { TimetableGenerationForm } from "../components/TimetableGenerationForm";
 import { formatRelative } from "date-fns";
+import { UserContext } from "../user-context";
 
 export default function TimeTables() {
-  const user = {
-    id: 1,
-  };
+  const {user} = useContext(UserContext);
+  const navigate = useNavigate();
+  if(!user){
+    navigate('/signin');
+  }
   const [loading, setLoading] = useState(true);
   const [timetables, setTimeTables] = useState([]);
   const [formVisible, setFormVisible] = useState(false);
@@ -66,7 +69,7 @@ export default function TimeTables() {
 
   useEffect(() => {
     axios
-      .get(`${baseurl}/timetable/${user.id}`)
+      .get(`${baseurl}/timetable/${user?.id}`)
       .then((res) => {
         setTimeTables(res.data);
         setLoading(false);
@@ -135,7 +138,7 @@ export default function TimeTables() {
           >
             <TimetableGenerationForm
               setFormVisible={setFormVisible}
-              userid={user.id}
+              userid={user?.id}
             />
           </motion.div>
         )}

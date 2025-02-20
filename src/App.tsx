@@ -12,6 +12,7 @@ import { UserContext } from "./user-context";
 import { useUser } from "./hooks/useUser";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const { user, setUser } = useUser();
@@ -27,7 +28,7 @@ function App() {
           <Route index element={<Landing />} />
           <Route path="/signin" element={<SignIn/>}/>
           <Route path="/signUp" element={<SignUp/>}/>
-          <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />}/>}>
             <Route index element={<Home />} />
             <Route path="timetable">
               <Route index element={<TimeTables />} />
