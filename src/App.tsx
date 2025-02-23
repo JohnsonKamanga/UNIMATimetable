@@ -13,6 +13,7 @@ import { useUser } from "./hooks/useUser";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import ProtectedRoute from "./components/ProtectedRoute";
+import DownloadPDF from "./pages/DownloadPDF";
 
 function App() {
   const { user, setUser } = useUser();
@@ -26,9 +27,12 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<Landing />} />
-          <Route path="/signin" element={<SignIn/>}/>
-          <Route path="/signUp" element={<SignUp/>}/>
-          <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />}/>}>
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signUp" element={<SignUp />} />
+          <Route
+            path="/dashboard"
+            element={<ProtectedRoute element={<Dashboard />} />}
+          >
             <Route index element={<Home />} />
             <Route path="timetable">
               <Route index element={<TimeTables />} />
@@ -39,6 +43,9 @@ function App() {
               <Route index element={<Appearance />} />
               <Route path="account-info/:username" element={<AccountInfo />} />
             </Route>
+          </Route>
+          <Route path="export">
+            <Route path="pdf/:name" element={<DownloadPDF />} />
           </Route>
         </Routes>
       </BrowserRouter>
