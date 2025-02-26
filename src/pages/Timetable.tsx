@@ -5,6 +5,16 @@ import Loader from "../components/Loader";
 import { NavLink, useParams } from "react-router";
 import { UserContext } from "../user-context";
 import { TimetableComponent } from "../components/TimeTableComponent";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDown } from "lucide-react";
+import { exportExcel, TExportToCSVInput } from "@/functions/exportToExcel";
 
 export type TRow = {
   venue: string;
@@ -21,6 +31,7 @@ export type TRow = {
 export default function Timetable() {
   const { name } = useParams();
   const [timetableData, setTimetableData] = useState<any[]>([]);
+  const [unsortedTimeTableData, setUnsortedTimetableData] = useState<TExportToCSVInput>()
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
 
@@ -28,6 +39,7 @@ export default function Timetable() {
     axios
       .get(`${baseurl}/timetable/view?userId=${user?.id}&name=${name}`)
       .then(async (res) => {
+        setUnsortedTimetableData(res.data);
         let sortedData = [];
         for (let i = 0; i < 9; i++) {
           sortedData.push([
@@ -58,9 +70,30 @@ export default function Timetable() {
 
   return (
     <div>
-      <NavLink to={`/download/${name}`} className="p-2">
-        Download
-      </NavLink>
+      <div className="ml-3 mb-3 text-sm text-center form-button border-[1px] border-opacity-25 hover:bg-black hover:bg-opacity-5 transition-colors border-black">
+        <DropdownMenu>
+          <DropdownMenuTrigger className="flex flex-row items-center">
+            <span className="gap-x-1">Download</span>
+            <ChevronDown size={18}/>
+            </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Options</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <NavLink to={`/export/pdf/${name}`} className="w-full">
+                PDF
+              </NavLink>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <div className=""
+              onClick={()=>{
+                exportExcel(unsortedTimeTableData);
+              }}
+              >CSV</div>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
       <TimetableComponent TimetableData={timetableData} />
     </div>
   );
