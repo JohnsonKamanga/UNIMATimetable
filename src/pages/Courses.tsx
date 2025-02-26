@@ -16,6 +16,11 @@ export default function Courses(){
     useEffect(()=>{
         axios.get(`${baseurl}/timetable/view/current/courses?userid=${user?.id}`)
         .then((timetable)=>{
+          if(!timetable.data){
+            setCourses([]);
+            setLoading(false)
+            return;
+          }
             setCourses(timetable.data);
             setLoading(false);
         })
