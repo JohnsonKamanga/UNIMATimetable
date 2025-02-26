@@ -90,9 +90,18 @@ export default function Home() {
 
   useEffect(() => {
     const c = getCurrentPeriod();
+    console.log('lodaing...')
     axios
       .get(`${baseurl}/timetable/view/current?userId=${user?.id}`)
       .then(async (res) => {
+        console.log('fetched...')
+        if(!res.data){
+          console.log('no data')
+          setTodaysSchedule([]);
+          setnextDaysSchedule([]);
+          setLoading(false)
+          return;
+        }
         setCurrentTimeTable(res.data);
         const now = Date.now();
         if (isMonday(now)) {
