@@ -1,8 +1,11 @@
 import { BookOpen, Calendar1Icon, Home, LogOut, Settings } from "lucide-react";
 import UserImage from "../assets/user-picture.png";
 import { NavLink, useLocation } from "react-router";
+import { useContext } from "react";
+import { UserContext } from "../user-context";
 
 export default function SideBar() {
+  const {user} = useContext(UserContext);
   const path = useLocation();
   return (
     <div className="h-lvh w-[271px] flex flex-col justify-between bg-[#003049]">
@@ -17,7 +20,7 @@ export default function SideBar() {
             />
           </div>
           <div className="w-full flex items-center justify-center">
-            <b className="font-bold text-2xl text-white">Full Name</b>
+            <b className="font-bold text-2xl text-white">{user?.username}</b>
           </div>
         </div>
         {/*Sidebar options */}
