@@ -107,7 +107,7 @@ export default function DownloadPDF() {
               display: "flex",
               flexDirection: "column",
               flexGrow: 1,
-              padding: 50,
+              padding: 30,
             }}
           >
             <PdfTimetableComponent TimetableData={timetableData} />
