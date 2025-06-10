@@ -1,3 +1,19 @@
+# Application Idea
+A web scraping based application that parsers users timetables from the student portal and generates a personalized timetable.
+
+# Key Features
+- Creating a timetable using the student portal
+- Viewing user's timetable
+- Export timetables as a PDF file and a CSV file.
+- Viewing time left until the next class
+- Viewing the time elapsed in an ongoing class
+- Viewing registered courses
+
+# Remarks
+The project is currently incomplete, however the core functionality has been implemented. The UI just needs to be polished and I have to finish implementing session management.
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
